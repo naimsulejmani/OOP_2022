@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TodoItemTest {
+    static Scanner reader = new Scanner(System.in);
+
     public static void main(String[] args) {
-
-
-//nje liste me todoItems
+        //nje liste me todoItems
         ArrayList<TodoItem> todoItems = new ArrayList<>();
         showMenu();
 
-        Scanner reader = new Scanner(System.in);
         String selected = reader.nextLine().toUpperCase();
 
         TodoMenu menu = TodoMenu.valueOf(selected);
@@ -63,11 +62,28 @@ public class TodoItemTest {
     }
 
     private static void clearAllMenu(ArrayList<TodoItem> todoItems) {
+        System.out.println("Ju jeni duke i fshire te gjitha te dhenat!");
+        System.out.println(
+                "A jeni i sigurte (shtyp PO per ti fshire!, tjeter per ti  ra pishman!) ");
+        boolean aJeISigurte = reader.nextLine().toUpperCase().equals("PO");
 
+        if (aJeISigurte) {
+            todoItems.clear();
+            System.out.println("Shkum posht!");
+        } else {
+            System.out.println("Pishmanli!");
+        }
     }
 
     private static void callAllMenu(ArrayList<TodoItem> todoItems) {
-
+        System.out.println("Lista me todo items!");
+        int index = 0;
+        System.out.println("---------------------------");
+        for (TodoItem item : todoItems) {
+            System.out.println(index + ": " + item);
+            index++;
+        }
+        System.out.println("---------------------------");
     }
 
     private static void callRemoveOneMenu(ArrayList<TodoItem> todoItems) {
@@ -79,14 +95,53 @@ public class TodoItemTest {
     }
 
     private static void callUpdateMenu(ArrayList<TodoItem> todoItems) {
-
+        System.out.println("Zgjidh njeren nga tasqet e meposhtme sipas numrit fillestare!:");
+        callAllMenu(todoItems);
+        int index = reader.nextInt();
+        reader.nextLine(); //zbraze buffer
+        if (index < todoItems.size()) {
+            TodoItem item = todoItems.get(index);
+            item.setCompleted(!item.isCompleted());
+            System.out.println("Statusi u ndryshua me sukses!");
+            System.out.println("-------------------------");
+            System.out.println(item);
+            System.out.println("-------------------------");
+        } else {
+            System.out.println("Indexi jashte vlerave te lejuara!");
+        }
     }
 
     private static void callAddMenu(ArrayList<TodoItem> todoItems) {
+        System.out.println("Shkruaj emrin e taskut: ");
+        String name = reader.nextLine();
 
+        TodoItem newTodoItem = new TodoItem(name);
+        todoItems.add(newTodoItem);
+        System.out.println("Tasku i meposhtem u shtua me sukses!");
+        System.out.println("-------------------------");
+        System.out.println(todoItems);
+        System.out.println("-------------------------");
     }
 
     private static void showMenu() {
         //ketu do ti shfaqim te gjitha menyte e ketij aplikacioni
+        System.out.println("Welcome to Personal Task Manager");
+        System.out.println("Choose one of the menu: ");
+        System.out.println("-------------------------------------------");
+        System.out.println("ADD - Per me shtu nje todo!");
+        System.out.println("UPDATE - Per te azhurnuar nje todo!");
+        System.out.println("ONE - Per te zgjedhur nje todo!");
+        System.out.println("ALL - Per te shfaqur te gjitha todo-te!");
+        System.out.println("REMOVE - Per te fshire nje todo!");
+        System.out.println("CLEAR - per te fshire te gjitha todo-te!");
+        System.out.println("EXIT - per te mbyllur aplikacionin!");
+        System.out.println("-------------------------------------------");
+        System.out.println("Zgjedhja juaj eshte: ");
     }
 }
+
+
+
+
+
+
