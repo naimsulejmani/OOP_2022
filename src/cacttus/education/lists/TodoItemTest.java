@@ -1,8 +1,6 @@
 package cacttus.education.lists;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class TodoItemTest {
@@ -21,13 +19,22 @@ public class TodoItemTest {
         while (menu != TodoMenu.EXIT) {
             switch (menu) {
                 case ADD:
-                    call_add_menu(todoItems);
+                    callAddMenu(todoItems);
                     break;
                 case UPDATE:
-                    call_update_menu(todoItems);
+                    callUpdateMenu(todoItems);
                     break;
                 case ONE:
-                    call_one_menu(todoItems);
+                    callGetOneMenu(todoItems);
+                    break;
+                case REMOVE:
+                    callRemoveOneMenu(todoItems);
+                    break;
+                case ALL:
+                    callAllMenu(todoItems);
+                    break;
+                case CLEAR:
+                    clearAllMenu(todoItems);
                     break;
             }
 
@@ -55,15 +62,27 @@ public class TodoItemTest {
 
     }
 
-    private static void call_one_menu(ArrayList<TodoItem> todoItems) {
+    private static void clearAllMenu(ArrayList<TodoItem> todoItems) {
 
     }
 
-    private static void call_update_menu(ArrayList<TodoItem> todoItems) {
+    private static void callAllMenu(ArrayList<TodoItem> todoItems) {
 
     }
 
-    private static void call_add_menu(ArrayList<TodoItem> todoItems) {
+    private static void callRemoveOneMenu(ArrayList<TodoItem> todoItems) {
+
+    }
+
+    private static void callGetOneMenu(ArrayList<TodoItem> todoItems) {
+
+    }
+
+    private static void callUpdateMenu(ArrayList<TodoItem> todoItems) {
+
+    }
+
+    private static void callAddMenu(ArrayList<TodoItem> todoItems) {
 
     }
 
