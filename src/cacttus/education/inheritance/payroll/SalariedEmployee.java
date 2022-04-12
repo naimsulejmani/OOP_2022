@@ -1,6 +1,6 @@
 package cacttus.education.inheritance.payroll;
 
-public class SalariedEmployee extends Employee{
+public class SalariedEmployee extends Employee {
     private double salary;
 
     public SalariedEmployee(int id, String name, String lastName, double salary) {
@@ -15,4 +15,11 @@ public class SalariedEmployee extends Employee{
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
+    @Override
+    public double pay() {
+        return getSalary();
+    }
 }
+
+

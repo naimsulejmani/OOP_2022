@@ -25,4 +25,9 @@ public class HourlyEmployee extends Employee {
     public void setHourlyWage(float hourlyWage) {
         this.hourlyWage = hourlyWage;
     }
+
+    @Override
+    public double pay() {
+        return hours * hourlyWage;
+    }
 }

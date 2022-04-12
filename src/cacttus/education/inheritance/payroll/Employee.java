@@ -4,7 +4,7 @@ public class Employee {
     private int id;
     private String name;
     private String lastName;
-    private double pay;
+    //private double pay;
 
     public Employee(int id, String name, String lastName) {
         this.id = id;
@@ -35,4 +35,17 @@ public class Employee {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public double pay() {
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d,%s,%s", id, name, lastName);
+    }
 }
+
+
+
+
