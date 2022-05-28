@@ -19,7 +19,7 @@ public class TypeVariableBoundExample {
                 new Borxhliu("Drin Hasani", 999),
                 new Borxhliu("Muala", -500)
         };
-        Borxhliu borxhliuIMIre = min(borxhilite);
+    //    Borxhliu borxhliuIMIre = min(borxhilite);
 
         Arrays.sort(vlersimet);
     }
