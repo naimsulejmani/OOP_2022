@@ -1,5 +1,7 @@
 package cacttus.education.generics_interfaces;
 
+import cacttus.education.generics_interfaces.consoles.ProductConsole;
+
 /*
     package models -> definojme klasat e projektetit qe kan me u perdore
 
@@ -14,7 +16,7 @@ package cacttus.education.generics_interfaces;
  */
 public class TestGenericInterface {
     public static void main(String[] args) {
-
+        ProductConsole.showConsole();
     }
 
 

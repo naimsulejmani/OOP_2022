@@ -1,5 +1,6 @@
 package cacttus.education.generics_interfaces.repositories;
 
+import cacttus.education.generics_interfaces.exceptions.ConflictException;
 import cacttus.education.generics_interfaces.exceptions.NotFoundException;
 import cacttus.education.generics_interfaces.interfaces.BaseRepository;
 import cacttus.education.generics_interfaces.models.Product;
@@ -31,17 +32,17 @@ public class ProductRepository implements BaseRepository<Product, Integer> {
     }
 
     @Override
-    public boolean add(Product item) {
-        return products.add(item);
+    public boolean add(Product item) throws ConflictException {
+        if (getById(item.getId()) == null) return products.add(item);
+        throw new ConflictException(
+                String.format("Product with id={%d} already exists!", item.getId()));
     }
 
     @Override
     public boolean modify(Product item) throws NotFoundException {
         Product product = getById(item.getId());
         if (product == null) {
-            throw new NotFoundException(
-                    String.format("Product with id={%d} not found!",
-                            item.getId()));
+            throw new NotFoundException(String.format("Product with id={%d} not found!", item.getId()));
         }
         /*
                 UPDATE dbo.Products
@@ -77,9 +78,7 @@ public class ProductRepository implements BaseRepository<Product, Integer> {
          */
         Product product = getById(id);
         if (product == null) {
-            throw new NotFoundException(
-                    String.format("Product with id={%d} not found!", id)
-            );
+            throw new NotFoundException(String.format("Product with id={%d} not found!", id));
         }
         return products.remove(product);
     }

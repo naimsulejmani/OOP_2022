@@ -1,8 +1,12 @@
 package cacttus.education.generics_interfaces.consoles;
 
+import cacttus.education.generics_interfaces.exceptions.ConflictException;
+import cacttus.education.generics_interfaces.exceptions.NotFoundException;
 import cacttus.education.generics_interfaces.models.Product;
 import cacttus.education.generics_interfaces.repositories.ProductRepository;
 
+import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Scanner;
 
 public class ProductConsole {
@@ -33,30 +37,97 @@ public class ProductConsole {
                     addProduct(reader);
                 }
                 case "p2" -> {
-
+                    updareProduct(reader);
                 }
                 case "p3" -> {
+                    removeProduct(reader);
 
                 }
                 case "p4" -> {
-
+                    findProductById(reader);
                 }
                 case "p5" -> {
-
+                    showAllProducts();
                 }
                 case "p6" -> {
-
+                    showProductCount();
                 }
                 case "p7" -> {
-
+                    findProductThatStartsWith(reader);
                 }
                 default -> {
                     System.out.println("Nuk keni zgjedhur meny te duhur!");
                 }
             }
+            showMenu();
+            selectedMenu = reader.nextLine();
         }
 
         System.out.println("Consola per menaxhim te produkteve po mbyllet!");
+    }
+
+    private static void updareProduct(Scanner reader) {
+        System.out.println("Shkruani id-ne e produktit:");
+        int productId = Integer.parseInt(reader.nextLine());
+
+        Product product = repository.getById(productId);
+        if (product == null) {
+            System.out.println("Producti nuk u gjet!");
+            return;
+        }
+        System.out.println("Produkti qe u gjet eshte: => " + product);
+        System.out.printf("Shkruani cmimin e ri (%.2f EUR cmimi vjeter): %n",
+                product.getUnitPrice());
+        double newPrice = Double.parseDouble(reader.nextLine());
+        product.setUnitPrice(newPrice);
+        try {
+            repository.modify(product);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void findProductThatStartsWith(Scanner reader) {
+        System.out.println("Shkruani filterin e emrit: ");
+        String filterName = reader.nextLine().toLowerCase();
+        List<Product> products = repository.getAll();
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains(filterName)) {
+                System.out.println(product);
+            }
+        }
+    }
+
+    private static void showProductCount() {
+        System.out.printf("Numri i produkteve eshte: %d%n", repository.getAll().size());
+    }
+
+    private static void findProductById(Scanner reader) {
+        System.out.println("Shkruani id=ne e produtkti: ");
+        int productId = Integer.parseInt(reader.nextLine());
+        Product product = repository.getById(productId);
+        if (product != null)
+            System.out.println(product);
+        else
+            System.out.println("Producti nuk u gjet ne liste!");
+    }
+
+    private static void removeProduct(Scanner reader) {
+        System.out.println("Shkruani id-ne e produktit qe deshironi te fshini!");
+        int productId = Integer.parseInt(reader.nextLine());
+
+        try {
+            repository.removeById(productId);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void showAllProducts() {
+        List<Product> products = repository.getAll();
+        for (Product product : products) {
+            System.out.println(product);
+        }
     }
 
     private static void addProduct(Scanner reader) {
@@ -74,10 +145,15 @@ public class ProductConsole {
         double unitPrice = Double.parseDouble(reader.nextLine());
         Product product = new Product(productId, productName, supplier,
                 category, unitPrice, unitInStock, false);
-        if (repository.add(product)) {
-            System.out.println("Produkti u regjistrua me sukses!");
-        } else {
-            System.out.println("Regjistrimi i produktit deshtoi, provoni perseri!");
+        try {
+            if (repository.add(product)) {
+                System.out.println("Produkti u regjistrua me sukses!");
+            } else {
+                System.out.println("Regjistrimi i produktit deshtoi, provoni perseri!");
+            }
+        } catch (ConflictException e) {
+            System.out.println("Regjistrimi i produktit deshtoi per shkak te gabimit:");
+            System.out.println(e.getMessage());
         }
     }
 }
