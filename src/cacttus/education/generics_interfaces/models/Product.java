@@ -2,7 +2,7 @@ package cacttus.education.generics_interfaces.models;
 
 import java.time.LocalDateTime;
 
-public class Product extends BaseObject<String> {
+public class Product extends BaseObject<String> implements Comparable<Product> {
     private int id;
     private String name;
     private String supplier; // Supplier class
@@ -91,4 +91,34 @@ public class Product extends BaseObject<String> {
     public void setDiscontinued(boolean discontinued) {
         this.discontinued = discontinued;
     }
+
+    @Override
+    public int compareTo(Product o) {
+        if (this.unitPrice == o.unitPrice) {
+            return this.name.compareTo(o.name);
+        } else if (this.unitPrice < o.unitPrice) return -1;
+        else return 1;
+    }
+
+    //LEXONI per JSON - Javascript Object Notations
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", supplier='" + supplier + '\'' +
+                ", category='" + category + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", unitInStock=" + unitInStock +
+                ", discontinued=" + discontinued +
+                '}';
+    }
 }
+
+
+
+
+
+
+
+

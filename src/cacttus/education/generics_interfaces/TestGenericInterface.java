@@ -13,4 +13,21 @@ package cacttus.education.generics_interfaces;
 
  */
 public class TestGenericInterface {
+    public static void main(String[] args) {
+
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

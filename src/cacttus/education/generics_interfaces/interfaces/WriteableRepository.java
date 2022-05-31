@@ -7,7 +7,7 @@ public interface WriteableRepository<T, Tid> {
 
     boolean modify(T item) throws NotFoundException;
 
-    boolean remove(T item);
+    boolean remove(T item) throws NotFoundException;
 
-    boolean removeById(Tid id);
+    boolean removeById(Tid id) throws NotFoundException;
 }

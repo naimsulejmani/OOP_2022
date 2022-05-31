@@ -66,12 +66,29 @@ public class ProductRepository implements BaseRepository<Product, Integer> {
     }
 
     @Override
-    public boolean remove(Product item) {
-        return false;
+    public boolean remove(Product item) throws NotFoundException {
+        return removeById(item.getId());
     }
 
     @Override
-    public boolean removeById(Integer id) {
-        return false;
+    public boolean removeById(Integer id) throws NotFoundException {
+        /*
+            DELETE FROM dbo.Products WHERE Id=@id;
+         */
+        Product product = getById(id);
+        if (product == null) {
+            throw new NotFoundException(
+                    String.format("Product with id={%d} not found!", id)
+            );
+        }
+        return products.remove(product);
     }
 }
+
+
+
+
+
+
+
+
